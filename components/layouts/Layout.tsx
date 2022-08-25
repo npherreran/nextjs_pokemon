@@ -1,5 +1,6 @@
 import React, { FC, ReactNode } from 'react'
 import Head from 'next/head';
+import { Navbar } from '../ui';
 
 interface ComponentProps {
     children: ReactNode,
@@ -16,9 +17,11 @@ export const Layout: FC<ComponentProps> = ({ children, title }) => {
                 <meta name="keywords" content={`${title}, pokemon, pokedex`} />
             </Head>
 
-            {/* Navbar */}
+            <Navbar />
 
-            <main>
+            <main style={{
+                padding: '0 2em'
+            }}>
                 {children}
             </main>
         </>
