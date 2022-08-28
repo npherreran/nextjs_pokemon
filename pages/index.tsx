@@ -1,5 +1,7 @@
 import { Layout } from '../components/layouts'
 import { GetStaticProps, NextPage } from 'next'
+import { pokeApi } from '../api';
+import { PokemonListResponse } from '../interfaces';
 
 const HomePage: NextPage = (props) => {
   return (
@@ -22,9 +24,12 @@ const HomePage: NextPage = (props) => {
 //- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
+
+  const { data } = await pokeApi.get<PokemonListResponse>('/pokemon?limit=151')
+
   return {
     props: {
-      name: 'Natalia'
+      pokemons: data.results
     }
   }
 }
