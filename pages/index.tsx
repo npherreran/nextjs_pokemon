@@ -3,6 +3,7 @@ import { GetStaticProps, NextPage } from 'next'
 import { pokeApi } from '../api';
 import { PokemonListResponse } from '../interfaces';
 import { SmallPokemon } from '../interfaces/pokemon-list';
+import { Card, Grid, Row, Text } from '@nextui-org/react';
 
 interface ComponentProps {
   pokemons: SmallPokemon[];
@@ -11,17 +12,31 @@ interface ComponentProps {
 const HomePage: NextPage<ComponentProps> = ({ pokemons }) => {
   return (
     <Layout title="Home - Pokemon">
-      <ul>
-        {
-          pokemons.map(e => (
-            <li key={e.id}>
-              <p>#{e.id}</p>
-              <h3>{e.name}</h3>
-              <img src={e.img} alt={e.name} />
-            </li>
-          ))
-        }
-      </ul>
+      <Grid.Container gap={2} justify="flex-start">
+        {pokemons.map((item, index) => (
+          <Grid xs={6} sm={3} key={index}>
+            <Card isPressable>
+              <Card.Body css={{ p: 30, backgroundColor: '#e0f7fa' }}>
+                <Card.Image
+                  src={item.img}
+                  objectFit="contain"
+                  width="100%"
+                  height={150}
+                  alt={item.name}
+                />
+              </Card.Body>
+              <Card.Footer css={{ justifyItems: "flex-start", backgroundColor: '#b2ebf2' }}>
+                <Row wrap="wrap" justify="space-between" align="center">
+                  <Text transform="capitalize" b css={{ color: '#006064' }}>{item.name}</Text>
+                  <Text css={{ color: "#00838f", fontWeight: "$semibold", fontSize: "$sm" }}>
+                    # {item.id}
+                  </Text>
+                </Row>
+              </Card.Footer>
+            </Card>
+          </Grid>
+        ))}
+      </Grid.Container>
     </Layout>
   )
 }
